@@ -20,9 +20,6 @@ function App() {
   const dbRef = ref(database, `slide/page`);
 
   useEffect(() => {
-    if (user === null) {
-      return;
-    }
     onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
       if (data !== null) {
