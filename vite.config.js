@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   base: process.env.VITE_BUILD ? "/webcam-slide/" : "/",
   build: {
-    outDir: 'docs',
+    outDir: process.env.VITE_BUILD ? 'docs' : 'dist',
   },
   server: {
     host: true,
