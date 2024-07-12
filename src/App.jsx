@@ -20,6 +20,9 @@ function App() {
   const dbRef = ref(database, `slide/page`);
 
   useEffect(() => {
+    if (user === null) {
+      return;
+    }
     onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
       if (data !== null) {
@@ -27,11 +30,13 @@ function App() {
       }
     });
     // eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     navigate(page.toString());
-    set(dbRef, page);
+    if (user !== null) {
+      set(dbRef, page);
+    }
     // eslint-disable-next-line
   }, [page]);
 
