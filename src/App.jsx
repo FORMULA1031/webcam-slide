@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import "./App.scss";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, database } from "./firebase";
+import { ref, set, onValue } from "firebase/database";
+import LogInButton from "./tools/LogInButton";
 import SlideTitle from "./slides/SlideTitle";
 import Slide1 from "./slides/Slide1";
 import Slide2 from "./slides/Slide2";
@@ -12,9 +16,22 @@ const Slides = [SlideTitle, Slide1, Slide2, Slide3];
 function App() {
   const [page, setPage] = useState(0);
   const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+  const dbRef = ref(database, `slide/page`);
+
+  useEffect(() => {
+    onValue(dbRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data !== null) {
+        setPage(data);
+      }
+    });
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     navigate(page.toString());
+    set(dbRef, page);
     // eslint-disable-next-line
   }, [page]);
 
@@ -48,6 +65,7 @@ function App() {
         ))}
         <Route path="*" element={<Navigate replace to="0" />} />
       </Routes>
+      <LogInButton auth={auth} user={user} />
     </Container>
   );
 }
