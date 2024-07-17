@@ -1,5 +1,10 @@
 {
   "projects": {
-    "default": "webcam-slide"
-  }
+    "default": "webcam-slide-6b19b",
+    "firebase --debug init": "webcam-slide-6b19b",
+    "webcam-slide-6b19b": "webcam-slide-6b19b"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }
